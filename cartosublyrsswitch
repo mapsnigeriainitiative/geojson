@@ -27,8 +27,8 @@
 <body style='background: yellow'>
   <div id='map' style='width:700px;height: 500px'></div>
   <div id='menu'>
-    <a href="#Cities" id="all" class="button all">CITIES<br> Above 0.8m people</a>
-<a href="#metropolis" id="metropolis" class="button metropolis">METROPOLIS<br> >3m <= 7m people</a> 
+    <a href="#Cities" id="all" class="button all">CITIES<br>Cities<a>
+<a href="#metropolis" id="metropolis" class="button metropolis">METROPOLIS<br> >1m <= 7m people</a> 
 <a href="#megapolis" id="megapolis" class="button megapolis">MEGAPOLIS<br> Above 7m people</a> 
   </div>
 
