@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Using HTML/CSS to create navigation menu for cartodb sublayers in leaflet powered maps</title>
+
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css" />
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js"></script>
+
+  <style>
+        #menu { position: absolute; top: 5px; right: 180px; width: 150px; height:150px; z-index:10;}
+    #menu a { 
+      float: right;
+      margin: 10px 20px;
+      width: 70px;
+       padding: 20px;
+      background: #4d4d4d;
+      text-align: left;
+      font: 11px Arial Bold;
+     color: #fff;
+     text-decoration: none;
+       }
+    #menu a.selected,
+    #menu a:hover { 
+      color: #e9b50b;
+    }
+  </style>
+</head>
+<body style='background: #FED976'>
+  <div id='map' style='width:700px;height: 500px'></div>
+  <div id='menu'>
+    <a href="#Cities" id="all" class="button all">CITIES<br> Above 0.8m people</a>
+<a href="#metropolis" id="metropolis" class="button capitals">METROPOLIS<br> >3m <= 7m people</a> 
+<a href="#megapolis" id="megapolis" class="button megapolis">MEGAPOLIS<br> Above 7m people</a> 
+  </div>
+
+  <script>
+  var map;
+  function main(){
+        map = new L.Map('map', { 
+      center: [4.6, 2.9],
+      zoom: 3
+    })
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: ' <a href="http://mapsnigeriainitiative.wordpress.com">mapsNI</a>'
+    }).addTo(map);
+var layerUrl = 'https://mayotunde.cartodb.com/api/v2/viz/cbb7fd66-7a70-11e5-98ab-0e5db1731f59/viz.json';
+
+  var sublayers = [];
+
+  cartodb.createLayer(map, layerUrl)
+  .addTo(map)
+  .on('done', function(layer) {
+   
+var LayerOptions = {
+      sql: "SELECT * FROM africa_populated_cities_2",
+      cartocss: "#africa_populated_cities_2{marker-fill: #FED976; marker-width: 12; marker-line-color: black; marker-allow-overlap: true;}"
+    }
+
+    var sublayer = layer.getSubLayer(0);
+
+    sublayer.set(LayerOptions);
+
+    sublayers.push(sublayer);
+  }).on('error', function() {
+     });
+
+    var Actions = {
+    all: function(){
+      sublayers[0].setSQL("SELECT * FROM africa_populated_cities_2");
+      return true;
+    },
+    megapolis: function(){
+      sublayers[0].setSQL("SELECT * FROM africa_populated_cities_2 WHERE citytype = 'megapolis'");
+      return true;
+    },
+    metropolis: function() {
+      sublayers[0].set({
+        sql: "SELECT * FROM africa_populated_cities_2 WHERE citytype = 'metropolis'",
+        cartocss: "#africa_populated_cities_2{ marker-fill: red; }"
+      });
+      return true;
+    }
+  }
+
+  $('.button').click(function() {
+    $('.button').removeClass('selected');
+    $(this).addClass('selected');
+        Actions[$(this).attr('id')]();
+  });
+
+}
+window.onload = main;
+  </script>
+</body>
+</html>
+
