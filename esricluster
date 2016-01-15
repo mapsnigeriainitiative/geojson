@@ -25,9 +25,7 @@
   var map = L.map('map').setView([7.50, 3.75], 9);
 
   L.esri.basemapLayer('Streets').addTo(map);
- var areas = L.esri.featureLayer({
-    url: 'http://services6.arcgis.com/c9vYYUT5fnie2Ui6/arcgis/rest/services/district/FeatureServer/0', 
-    style: {fillColor: 'transparent', color: '#000', weight: 2, fillOpacity: 0.4}}).addTo(map);
+ 
 
   L.esri.clusteredFeatureLayer({
     url: 'https://services6.arcgis.com/c9vYYUT5fnie2Ui6/arcgis/rest/services/Schools/FeatureServer/0'
