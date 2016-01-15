@@ -36,15 +36,16 @@
             }).addTo(map);
 
  function onEachFeature(feature, layer){
-  if(feature.properties&&feature.properties.name&&feature.properties.population){
-layer.bindPopup(feature.properties.name + '<br>' + feature.properties.population);}}
+  if(feature.properties&&feature.properties.name&&feature.properties.NAME_1){
+layer.bindPopup(feature.properties.name + '<br>' + feature.properties.NAME_1);}}
+
+var style = {fillColor: 'red', color: 'black', fillOpacity: 0.5};
         
         L.Control.FileLayerLoad.LABEL = '<i class="fa fa-folder-open"></i>';
        L.Control.fileLayerLoad({
-       layerOptions: {onEachFeature,
+       layerOptions: {onEachFeature, style
          fileSizeLimit: 1024}
         }).addTo(map);
-
     </script>
 </body>
 </html>
