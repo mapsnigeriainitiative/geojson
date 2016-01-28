@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Inserting images into popups in leaflet maps</title>
+<link rel="stylesheet"
+	href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" 
+/>
+</head>
+<body>
+<div id="map" style="width: 600px;height: 400px"></div>
+<script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+<script>
+
+var map = L.map('map').setView([6, 5], 7);
+L.tileLayer(
+'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+attribution:' Map Data &copy; <a href="http://openstreetmap.org">openstreetmap</a>,'+
+	'<a href="http://mapsnigeriainitiative.wordpress.com">mapsnigeriainitiative, paranomia</a>',
+	maxZoom: 18,
+	}).addTo(map);
+
+function onEachFeature(feature, layer){
+if(feature.properties&&feature.properties.Name) {
+layer.bindPopup(feature.properties.Name);}}
+
+var Cities = [{
+	"type": "Feature",
+	"properties": {
+	"Name": "<h4 style='color:red';>Capital City of Abuja</h4><br>Country: Nigeria<br><img src='http://mw2.google.com/mw-panoramio/photos/medium/39142614.jpg' width=100 height=80 /><br>The fast growing federal capital city of Africa most populous country."
+	},
+	"geometry": {	
+	"type": "Point",
+	"coordinates": [7.00, 9.00]
+	}}, {
+	"type": "Feature",
+	"properties": {
+	"Name": "<h4 style='color:red';>City of Ibadan</h4><br>Country: Nigeria<br><img src='http://mw2.google.com/mw-panoramio/photos/medium/11132871.jpg' width=100 height=80 /><br>The largest city in West africa in land area. An ancient city of note, once a military fortress." 
+	},
+	"geometry": {	
+	"type": "Point",
+	"coordinates": [3.50, 7.50]
+	  }}];
+var style = {
+fillColor: "yellow",
+color: "red"
+	};
+
+L.geoJson(Cities, {onEachFeature,
+pointToLayer: function(feature, latlng) {
+return L.circleMarker(latlng, style); }}
+).addTo(map);
+
+</script>
+</body>
+</html>
