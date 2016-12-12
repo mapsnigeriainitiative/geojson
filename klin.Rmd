@@ -1,0 +1,49 @@
+---
+title: "Drawing features on web maps using Leaflet and R"
+author: "mapsnigeriainitiative.com"
+date: "September 26, 2016"
+output: html_document
+code_folding: hide
+---
+
+This tutorial will demonstrate the use of leaflet and raster packages in R to draw features as layers onto a web map.The demo will use different types of datasets in shapefile and geojson formats.
+
+Install the library(raster) package from the Packages tab.
+Install the library(jsonlite) package too.
+
+Download zipped folder with your sample data for practice by clicking here:https://www.dropbox.com/s/dmi8rae97pzr7bq/shapefiles.zip?dl=0
+
+
+Write the R argument below into the console and press Enter after the last line. Click the viewer tab to see result. 
+
+
+```{r}
+library(leaflet) 
+library(raster)
+dd<-shapefile("C:/shapefiles/occurclay.shp") # use this code to add your shapefile from your local directory
+cc<-shapefile("C:/states shapefiles/delta.shp")
+leaflet(width = "100%")%>% addTiles(attribution = "overlay data© mapsnigeriainitiative 2016")%>% setView(6, 6, 8) %>%  # add the default basemap along with setting the view (lng, lat) and initial zoom 
+   addPolygons(data = cc, fill=TRUE, stroke = TRUE, color = "red", popup = paste0("Name:",cc$NAME_2,"<br>", "Pop:", cc$total))%>% #add the polygon features along with CSS style and popup display
+addCircleMarkers(data = dd, fill = TRUE, stroke = TRUE, color = "#000", fillColor = "blue", radius = 8, weight = 1) #add the points as circular markers and add CSS style. Press the Enter key
+```
+
+
+Make sure you write the correct directory to your shapefile. 
+
+Next we add a dataset that is in geojson format. Write the R argument below onto the console and press Enter after the last line. Click the viewer tab to see result.
+
+
+```{r}
+library(jsonlite)
+library(leaflet)
+spots <- readLines("https://cdn.rawgit.com/mayotunde/cluster/gh-pages/spot.geojson")%>%  paste(collapse = "\n") #use the <-readlines to load a geojson file from an external url into the rstudio
+leaflet(width = "100%") %>% #initialize the leaflet map
+setView(lng = 4.6, lat = 2.8, zoom = 3)%>% #set the view and initialize zoom of the map
+  addTiles(attribution = "overlay data© mapsnigeriainitiative 2016")%>% #add the base maps from CartoDB 
+ addGeoJSON(spots) # Draw the geojson file onto the map and Press the enter key
+```
+
+
+* There is no provision for adding CSS styles to geojson point features for now.
+
+Now that is done, you can go ahead and use the Publish icon to share your leaflet map on the web.
