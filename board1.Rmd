@@ -1,0 +1,130 @@
+---
+title: "Nigeria:A summary of State creation from 1967-Till date"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+
+
+#Summary
+<h2>Summary</h2>
+Nigeria has created thirty six federal states since her independance in October 1960. Below is a table showing the names of federal states and their date of creation since 1967.
+
+| State             	| Date Created      	|
+|-------------------	|-------------------	|
+| Abia State        	| 27 August 1991    	|
+| Adamawa State     	| 27 August 1991    	|
+| Akwa Ibom State   	| 23 September 1987 	|
+| Anambra State     	| 27 August 1991    	|
+| Bauchi State      	| 3 February 1976   	|
+| Bayelsa State     	| 1 October 1996    	|
+| Benue State       	| 3 February 1976   	|
+| Borno State       	| 3 February 1976   	|
+| Cross River State 	| 27 May 1967       	|
+| Delta State       	| 27 August 1991    	|
+| Ebonyi State      	| 1 October 1996    	|
+| Edo State         	| 27 August 1991    	|
+| Ekiti State       	| 1 October 1996    	|
+| Enugu State       	| 27 August 1991    	|
+| Gombe State       	| 1 October 1996    	|
+| Imo State         	| 3 February 1976   	|
+| Jigawa State      	| 27 August 1991    	|
+| Kaduna State      	| 27 May 1967       	|
+| Kano State        	| 27 May 1967       	|
+| Katsina State     	| 23 September 1987 	|
+| Kebbi State       	| 27 August 1991    	|
+| Kogi State        	| 27 August 1991    	|
+| Kwara State       	| 27 May 1967       	|
+| Lagos State       	| 27 May 1967       	|
+| Nasarawa State    	| 1 October 1996    	|
+| Niger State       	| 3 February 1976   	|
+| Ogun State        	| 3 February 1976   	|
+| Ondo State        	| 3 February 1976   	|
+| Osun State        	| 27 August 1991    	|
+| Oyo State         	| 3 February 1976   	|
+| Plateau State     	| 3 February 1976   	|
+| Rivers State      	| 3 February 1976   	|
+| Sokoto State      	| 3 February 1976   	|
+| Taraba State      	| 27 August 1991    	|
+| Yobe State        	| 27 August 1991    	|
+| Zamfara State     	| 1 October 1996    	|
+
+
+#Register
+
+Column {data-width=550}
+-----------------------------------------------------------------------
+
+###About us
+<a href="https://mapsnigeriainitiative.com">&copy;mapsnigeriainitiative</a> is a non-profit initiative established with the aim of sharing technical information and experience in the area of geospatial data gathering, processing, storage, interpretation and dissemination with the general public.<br><br>
+<a href="https://mapsnigeriainitiative.com/register">Register</a> and get free access to GIS tutorials and webinars on various topics in Desktop GIS, Web GIS, Web Cartography and Web mapping applications.
+<br><br><br>
+
+<strong>Contact</strong>
+Email: admin@mapsnigeriainitiative.com
+Live Chat: 3-5pm Saturdays (mapsnigeriainitiative.com)<br><br>
+
+&copy;<small></em>Contents of this work are the intellectual property of mapsnigeriainitiative. All rights reserved.Contributions from wikipedia, openstreetmap, carto</em></small><br>
+
+##Upcoming activities
+
+```{r fig.width = 6, fig.height = 6, echo=FALSE}
+library(jpeg)
+library(grid)
+img <- readJPEG("C:/Users/user/Desktop/out.jpg")
+ grid.raster(img)
+```
+
+
+#1967-1976
+
+Column {data-width=550}
+-----------------------------------------------------------------------
+
+###<strong>Administrative Map of Nigeria as at 1976 with 19 states</strong>
+<small>Mouse Click on the feature boundaries to display info</small>
+```{r echo=FALSE}
+library(leaflet)
+library(raster)
+first <- shapefile("C:/New folder/1976.shp")
+leaflet(width='80%')%>%
+  addTiles()%>%
+  setView(lng=7.30, lat=9.00, zoom=6)%>%
+  addPolygons(data = first,weight = 1, fill = TRUE, stroke = TRUE, color = "#000",  popup = paste0(paste0("<strong style='color:red'>Name: </strong>", 
+                      first$name, 
+                      "<br><strong>Createdate: </strong>", 
+                      first$createdate)
+  ), group = "first")
+
+```
+
+
+
+#1976 - till date
+
+Column {data-width=550}
+-----------------------------------------------------------------------
+
+###<strong>Administrative Map of Nigeria as of today with 36 federal states<br>
+<small>Mouse Click on the feature boundaries to display info</small>
+```{r}
+library(leaflet)
+library(raster)
+second <- shapefile("C:/New Folder/adm.shp")
+leaflet(width='80%')%>%
+  addProviderTiles("CartoDB.Positron")%>%
+  setView(lng=7.30, lat=9.00, zoom=6)%>%
+ addPolygons(data = second,weight = 1, fill = TRUE, stroke = TRUE, color = "red",  fillOpacity = 0.2, popup = paste0(paste0("<strong style='color:red'>Name: </strong>", 
+                      second$NAME_1, 
+                      "<br><strong>Createdate: </strong>", 
+                      second$createdate)
+  ), group = "second")
+```
+
+
